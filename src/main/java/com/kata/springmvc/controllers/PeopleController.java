@@ -20,15 +20,15 @@ public class PeopleController {
     }
 
     @GetMapping()
-    public String index(Model model) {
+    public String allUser(Model model) {
         model.addAttribute("users", userService.allUsers());
-        return "users/alluser";
+        return "users/all";
     }
 
     @GetMapping("/{id}")
-    public String get(@PathVariable("id") Long id, Model model) {
+    public String showUser(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getUser(id));
-        return "users/get";
+        return "users/show";
     }
 
     @GetMapping("/new")

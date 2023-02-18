@@ -10,8 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-@Component
+
 @Repository
+@Service
 public class PersonDAOImp implements UserDAO {
 
     private final EntityManager em;
