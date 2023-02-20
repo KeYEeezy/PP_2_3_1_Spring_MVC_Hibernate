@@ -3,6 +3,7 @@ package com.kata.springmvc.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -20,9 +21,10 @@ import java.util.Objects;
 import java.util.Properties;
 
 @EnableTransactionManagement
-@EnableJpaRepositories("com.kata.springmvc.dao")
+@EnableJpaRepositories("com.kata.springmvc.repositories")
 @Configuration
 @PropertySource("classpath:db.properties")
+@ComponentScan("com.kata.springmvc")
 public class HibernateConfig {
 
     private final Environment env;

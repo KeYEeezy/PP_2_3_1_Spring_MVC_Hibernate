@@ -2,12 +2,16 @@ package com.kata.springmvc.service;
 
 import com.kata.springmvc.dao.UserDAO;
 import com.kata.springmvc.models.User;
+import com.kata.springmvc.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class UserServiceImpl implements UserService {
 
     private final UserDAO userDAO;
@@ -17,27 +21,31 @@ public class UserServiceImpl implements UserService {
         this.userDAO = userDAO;
     }
 
+
     @Override
-    public void addUser(User user) {
-        userDAO.addUser(user);
+    public List<User> findAll() {
+        return userDAO.findAll();
     }
 
     @Override
-    public List<User> allUsers() {
-        return userDAO.allUsers();
+    public User findUser(Long id) {
+        return userDAO.findUser(id);
+
+    }
+
+    @Transactional
+    public void saveUser(User user) {
+        userDAO.saveUser(user);
     }
 
     @Override
-    public User getUser(Long id) {
-        return userDAO.getUser(id);
+    @Transactional
+    public void updateUser(Long id, User updatedUser) {
+        userDAO.updateUser(id,updatedUser);
     }
 
     @Override
-    public void editUser(Long id, User user) {
-        userDAO.editUser(id, user);
-    }
-
-    @Override
+    @Transactional
     public void deleteUser(Long id) {
         userDAO.deleteUser(id);
     }

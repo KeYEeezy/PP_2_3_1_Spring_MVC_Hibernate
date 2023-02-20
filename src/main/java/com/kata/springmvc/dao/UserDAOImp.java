@@ -8,38 +8,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
+@Component
+public class UserDAOImp implements UserDAO {
+    @PersistenceContext
+    private EntityManager em;
 
-@Repository
-@Service
-public class PersonDAOImp implements UserDAO {
-
-    private final EntityManager em;
-
-    @Autowired
-    public PersonDAOImp(EntityManager em) {
-        this.em = em;
-    }
-
-    @Transactional
-    public List<User> allUsers() {
+    public List<User> findAll() {
         return em.createQuery("from User ").getResultList();
     }
 
-    @Transactional
-    public User getUser(Long id) {
+    public User findUser(Long id) {
         return em.find(User.class, id);
     }
 
-    @Transactional
-    public void addUser(User user) {
+    public void saveUser(User user) {
         em.persist(user);
 
     }
 
-    @Transactional
-    public void editUser(Long id, User updatedUser) {
+    public void updateUser(Long id, User updatedUser) {
         User userToBeUpdated = em.find(User.class, id);
         userToBeUpdated.setName(updatedUser.getName());
         userToBeUpdated.setSurname(updatedUser.getSurname());
@@ -47,7 +37,6 @@ public class PersonDAOImp implements UserDAO {
         userToBeUpdated.setEmail(updatedUser.getEmail());
     }
 
-    @Transactional
     public void deleteUser(Long id) {
         em.remove(em.find(User.class, id));
     }

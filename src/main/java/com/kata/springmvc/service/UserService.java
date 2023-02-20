@@ -5,13 +5,13 @@ import com.kata.springmvc.models.User;
 import java.util.List;
 
 public interface UserService {
-    void addUser(User user);
+    void saveUser(User user);
 
-    List<User> allUsers();
+    List<User> findAll();
 
-    User getUser(Long id);
+    User findUser(Long id);
 
-    void editUser(Long id, User user);
+    void updateUser(Long id, User user);
 
     void deleteUser(Long id);
 }

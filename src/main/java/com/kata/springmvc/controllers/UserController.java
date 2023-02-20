@@ -10,24 +10,23 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/users")
-public class PeopleController {
+public class UserController {
 
     private final UserService userService;
-
     @Autowired
-    public PeopleController(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 
     @GetMapping()
     public String allUser(Model model) {
-        model.addAttribute("users", userService.allUsers());
+        model.addAttribute("users", userService.findAll());
         return "users/all";
     }
 
     @GetMapping("/{id}")
     public String showUser(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("user", userService.findUser(id));
         return "users/show";
     }
 
@@ -38,19 +37,19 @@ public class PeopleController {
 
     @PostMapping()
     public String create(@ModelAttribute("user") User user) {
-        userService.addUser(user);
+        userService.saveUser(user);
         return "redirect:/users";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(Model model, @PathVariable("id") Long id) {
-        model.addAttribute("user", userService.getUser(id));
+        model.addAttribute("user", userService.findUser(id));
         return "users/edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("person") User user, @PathVariable("id") Long id) {
-        userService.editUser(id, user);
+        userService.updateUser(id, user);
         return "redirect:/users";
     }
 
